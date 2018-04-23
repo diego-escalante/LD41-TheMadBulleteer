@@ -5,11 +5,12 @@ public class UpgradeMultishotButton : UpgradeButton {
 	private PlayerShip playerShip;
 	private int buysLeft = 3;
 
-	private new void Start () {
+	private new void OnEnable () {
 		_cost = 500;
 		_costIncreaseRate = 2f;
+		buysLeft = 3;
 		playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
-		base.Start();
+		base.OnEnable();
 	}
 
 	protected override void GainBenefit() {

@@ -5,11 +5,12 @@ public class DecreaseSRTButton : UpgradeButton {
 	private PlayerShip playerShip;
 	private int buysLeft = 29;
 
-	private new void Start() {
+	private new void OnEnable() {
 		_cost = 50;
 		_costIncreaseRate = 1.25f;
+		buysLeft = 29;
 		playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
-		base.Start();
+		base.OnEnable();
 	}
 
 	protected override void GainBenefit() {

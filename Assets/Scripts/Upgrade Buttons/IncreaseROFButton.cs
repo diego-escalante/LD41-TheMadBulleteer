@@ -5,11 +5,12 @@ public class IncreaseROFButton : UpgradeButton {
 	private PlayerShip playerShip;
 	private int buysLeft = 20;
 
-	private new void Start () {
+	private new void OnEnable () {
 		_cost = 50;
 		_costIncreaseRate = 1.5f;
+		buysLeft = 20;
 		playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
-		base.Start();
+		base.OnEnable();
 	}
 
 	protected override void GainBenefit() {

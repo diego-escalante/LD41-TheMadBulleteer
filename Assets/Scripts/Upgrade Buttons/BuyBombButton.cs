@@ -4,11 +4,11 @@ public class BuyBombButton : UpgradeButton {
 
 	private PlayerShip playerShip;
 
-	private new void Start () {
+	private new void OnEnable() {
 		_cost = 100;
 		_costIncreaseRate = 2f;
 		playerShip = GameObject.FindWithTag("Player").GetComponent<PlayerShip>();
-		base.Start();
+		base.OnEnable();
 	}
 
 	protected override void GainBenefit() {

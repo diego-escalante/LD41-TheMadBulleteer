@@ -12,7 +12,7 @@ public abstract class UpgradeButton : MonoBehaviour {
 
 	private SoundController soundController;
 
-	protected void Start () {
+	protected void OnEnable () {
 		_bulletStockpile = GameObject.FindWithTag("GameController").GetComponent<BulletStockpile>();
 		button = GetComponent<Button>();
 		button.onClick.AddListener(BuyUpgrade);
