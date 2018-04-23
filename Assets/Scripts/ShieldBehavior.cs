@@ -8,9 +8,20 @@ public class ShieldBehavior : MonoBehaviour {
 	private float srt = 60f;
 
 	private Renderer rend;
+	private SoundController soundController;
 
 	public void Start() {
 		rend = transform.GetChild(0).GetComponent<Renderer>();
+		soundController = GameObject.FindWithTag("GameController").GetComponent<SoundController>();
+	}
+
+	public void OnEnable() {
+		CancelInvoke();
+		shielded = true;
+	}
+
+	public void OnDisable() {
+		StopCoroutine("RegenerateShield");
 	}
 
 	public bool CanAbsorbDamage() {
@@ -33,5 +44,6 @@ public class ShieldBehavior : MonoBehaviour {
 		}
 		shielded = true;
 		rend.enabled = true;
+		soundController.playShieldRecharge();
 	} 
 }

@@ -9,8 +9,12 @@ public class EnemySpawner : MonoBehaviour {
 				  E4SpawnRate, E4SpawnDelta, 
 				  E5SpawnRate, E5SpawnDelta;
 
-	private void Start() {
+	private void OnEnable() {
 		Invoke("Phase1", 10);
+	}
+
+	private void OnDisable() {
+		CancelInvoke();
 	}
 
 	private void E1Spawner() {

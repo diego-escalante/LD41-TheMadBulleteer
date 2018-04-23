@@ -10,12 +10,15 @@ public abstract class UpgradeButton : MonoBehaviour {
 	protected int _cost;
 	protected float _costIncreaseRate;
 
+	private SoundController soundController;
+
 	protected void Start () {
 		_bulletStockpile = GameObject.FindWithTag("GameController").GetComponent<BulletStockpile>();
 		button = GetComponent<Button>();
 		button.onClick.AddListener(BuyUpgrade);
 		costText = transform.Find("Cost").GetComponent<Text>();
 		costText.text = getCostText();
+		soundController = GameObject.FindWithTag("GameController").GetComponent<SoundController>();
 	}
 	
 	private void Update () {
@@ -29,6 +32,7 @@ public abstract class UpgradeButton : MonoBehaviour {
 	public void BuyUpgrade() {
 		int bulletCount = _bulletStockpile.GetBulletCount();
 		if (bulletCount >= _cost) {
+			soundController.playUpgrade();
 			_bulletStockpile.IncrementBulletCount(-_cost);
 			_cost = (int)(_cost * _costIncreaseRate);
 			costText.text = getCostText();

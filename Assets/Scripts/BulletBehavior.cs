@@ -11,6 +11,7 @@ public class BulletBehavior : MonoBehaviour {
 
 	void Start() {
 		layerMask = LayerMask.GetMask(_fromEnemy ? "Player" : "Enemies");
+		GameObject.FindWithTag("GameController").GetComponent<SoundController>().playShotFired();
 	}
 	
 	void Update () {

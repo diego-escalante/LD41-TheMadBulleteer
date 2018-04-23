@@ -33,9 +33,21 @@ public class PlayerShip : MonoBehaviour, IDamageable {
 	private ShieldBehavior shieldBehavior;
 	private Renderer shipRender;
 	private Collider2D shipColl;
+	private SoundController soundController;
 
-	private void Start() {
+	public GameObject Explosion;
+	public Color ExpColor;
+
+	private void OnEnable() {
+		
+		lives = 3;
+		bombCount = 1;
+		damage = 1;
+		rof = 1f;
+		srt = 60;
+		
 		bulletStockpile = GameObject.FindWithTag("GameController").GetComponent<BulletStockpile>();
+		bulletStockpile.SetBps(0);
 		rateOfFireText = _rateOfFire.GetComponent<Text>();
 		rateOfFireText.text = rof.ToString();
 		damageText = _damage.GetComponent<Text>();
@@ -50,6 +62,7 @@ public class PlayerShip : MonoBehaviour, IDamageable {
 		shieldBehavior = GetComponent<ShieldBehavior>();
 		shipRender = GetComponent<SpriteRenderer>();
 		shipColl = GetComponent<Collider2D>();
+		soundController = GameObject.FindWithTag("GameController").GetComponent<SoundController>();
 	} 
 	
 	// Update is called once per frame
@@ -84,6 +97,13 @@ public class PlayerShip : MonoBehaviour, IDamageable {
 		pos.y = Mathf.Clamp(pos.y, -5, 5);
 		transform.position = pos;
 
+		// if (Input.GetKeyDown(KeyCode.O)) {
+		// 	Camera.main.GetComponent<CamShaker>().smallShake();
+		// }
+
+		// if (Input.GetKeyDown(KeyCode.P)) {
+		// 	Camera.main.GetComponent<CamShaker>().bigShake();
+		// }
 	}
 
 	private void FireBullet() {
@@ -120,15 +140,29 @@ public class PlayerShip : MonoBehaviour, IDamageable {
 	}
 
 	public void TakeDamage(float damage) {
+		ParticleSystem.MainModule exp;
 		if (shieldBehavior.CanAbsorbDamage()) {
+			Camera.main.GetComponent<CamShaker>().smallShake();
+			soundController.playShieldUsed();
+			exp = Instantiate(Explosion, transform.position, Quaternion.identity).GetComponent<ParticleSystem>().main;
+			exp.startColor = ExpColor;
 			return;
 		}
 		if (lives > 0) {
 			IncreaseLives(-1);
 			StartCoroutine("Recover");
+			Camera.main.GetComponent<CamShaker>().smallShake();
+			soundController.playSmallHit();
+			exp = Instantiate(Explosion, transform.position, Quaternion.identity).GetComponent<ParticleSystem>().main;
+			exp.startColor = ExpColor;
 			return;
 		}
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		
+		Camera.main.GetComponent<CamShaker>().bigShake();
+		soundController.playBigHit();
+		exp = Instantiate(Explosion, transform.position, Quaternion.identity).GetComponent<ParticleSystem>().main;
+		exp.startColor = ExpColor;
+		GameObject.FindWithTag("GameController").GetComponent<MenuController>().EndGame(bulletStockpile.GetBulletCount());
 	}
 
 	public void IncreaseDamage(int delta) {
@@ -161,7 +195,9 @@ public class PlayerShip : MonoBehaviour, IDamageable {
 
 	private IEnumerator ExplodeBomb() {
 		Camera.main.backgroundColor = Color.white;
-		float flashDuration = 0.2f;
+		Camera.main.GetComponent<CamShaker>().bigShake();
+		soundController.playBigHit();
+		float flashDuration = 0.4f;
 
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		foreach(GameObject enemy in enemies) {

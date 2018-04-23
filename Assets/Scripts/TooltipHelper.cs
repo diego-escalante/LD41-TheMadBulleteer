@@ -16,12 +16,12 @@ public class TooltipHelper : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 	public void OnPointerEnter(PointerEventData eventData) {
 		tooltip.text = _tooltipText;
-		tooltipBackground.enabled = true;
+		tooltipBackground.color = new Color(0,0,0,0.6f);
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {
 		tooltip.text = "";
-		tooltipBackground.enabled = false;
+		tooltipBackground.color = Color.clear;
 	}
 
 }

@@ -47,4 +47,15 @@ public class BulletStockpile : MonoBehaviour {
 	public int GetBulletCount() {
 		return (int)bulletCount;
 	}
+
+	public void SetBps(long newBps) {
+		bps = newBps;
+		bpsCounterText.text = bps.ToString();
+	}
+
+	public void SetBulletCount(float count) {
+		bulletCount = count;
+		int i = (int)bulletCount;
+		bulletCounterText.text = i.ToString();
+	}
 }
