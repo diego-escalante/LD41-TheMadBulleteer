@@ -8,7 +8,7 @@
 </p>
 
 ## [Play the game here!](https://diego-escalante.itch.io/the-mad-bulleteer)
-This game was made in 48 hours for the Ludum Dare 41 jam. The theme of the jam was ""Combine 2 Incompatible Genres." It was made with Unity. 
+This game was made in 48 hours for the Ludum Dare 41 jam in April 2018. The theme of the jam was ""Combine 2 Incompatible Genres." It was made with Unity. 
 
 ## Links
 * [The Mad Bulleteer on itch.io](https://diego-escalante.itch.io/the-mad-bulleteer): Play the game directly on your browser here.
